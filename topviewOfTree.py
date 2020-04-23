@@ -1,3 +1,4 @@
+#class node to add new data as node 
 class Node:
     def __init__(self, info): 
         self.info = info  
