@@ -1,3 +1,4 @@
+#class node to add new data as a node
 class Node:
     def __init__(self,data):
         self.left = None
@@ -14,3 +15,6 @@ def myfunc(root,mn,mx):
 
 def checkBST(root):
     return myfunc(root,mn,mx)
+
+#mn and mx can change according constraint
+#or can consider it to be pow(2,32)
