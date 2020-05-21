@@ -1,74 +1,93 @@
-def myfun(root1,root2):
-    if root1 == None and root2 == None:
-        return True
-    elif (root1 == None and root2 != None) or (root2 == None and root1 != None):
-        return False
-    elif (myfun(root1.left,root2.right) == False) or (myfun(root2.left,root1.right) == False):
-        return False
-    return True
 
-def IsFoldable(root):
+def serialize(root, A):
     if root is None:
-        return True
-    return  myfun(root.left,root.right)
-
-class Node:
-    def __init__(self,val):
-        self.data = val
-        self.left = None
-        self.right = None
-        
+        A.append(-1)
+        return
+    A.append(root.data)
+    serialize(root.left,A)
+    serialize(root.right,A)
+    
+def deSerialize(A):
+    index = 0
+    if index == len(A):
+        return None
+    val = A[index]
+    index += 1
+    if A[index] == -1:
+        return None
+    node = Node(val)
+    node.left = deSerialize(A)
+    node.right = deSerialize(A)
+    return node
 
 from collections import deque
+class Node:
+    def __init__(self, val):
+        self.right = None
+        self.data = val
+        self.left = None
+   
 def buildTree(s):
     if(len(s)==0 or s[0]=="N"):           
         return None
- 
+
     ip=list(map(str,s.split()))
 
     root=Node(int(ip[0]))                     
     size=0
     q=deque()
-
+  
     q.append(root)                            
     size=size+1 
-    
+
     i=1                                       
     while(size>0 and i<len(ip)):
+ 
         currNode=q[0]
         q.popleft()
         size=size-1
-        
+
         currVal=ip[i]
-        
+
         if(currVal!="N"):
             
+  
             currNode.left=Node(int(currVal))
-    
+            
+            
             q.append(currNode.left)
             size=size+1
+
         i=i+1
         if(i>=len(ip)):
             break
         currVal=ip[i]
         
         if(currVal!="N"):
-            
 
             currNode.right=Node(int(currVal))
-            
 
             q.append(currNode.right)
             size=size+1
         i=i+1
     return root
 
+def inorder(root):
+    if not root:
+        return
+    inorder(root.left)
+    print(root.data, end=" ")
+    inorder(root.right)
+    
 if __name__=="__main__":
     t=int(input())
     for _ in range(0,t):
-        s=input()
-        root=buildTree(s)
-        if IsFoldable(root) is True:
-            print('Yes')
-        else:
-            print('No')
+        root=buildTree(input())
+        A=[]
+        serialize(root, A)
+        r=deSerialize(A)
+        inorder(r)
+        print()
+        
+        
+        

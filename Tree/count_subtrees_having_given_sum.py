@@ -1,16 +1,31 @@
-def myfun(root1,root2):
-    if root1 == None and root2 == None:
-        return True
-    elif (root1 == None and root2 != None) or (root2 == None and root1 != None):
-        return False
-    elif (myfun(root1.left,root2.right) == False) or (myfun(root2.left,root1.right) == False):
-        return False
-    return True
+def countSub(root, count, x): 
+    if (not root): 
+        return 0
 
-def IsFoldable(root):
-    if root is None:
-        return True
-    return  myfun(root.left,root.right)
+    ls = countSub(root.left,count, x)  
+    rs = countSub(root.right,count, x)  
+ 
+    Sum = ls + rs + root.data  
+ 
+    if (Sum == x):  
+        count[0] += 1
+ 
+    return Sum
+ 
+def countSubtreesWithSumX(root, x): 
+    if (not root): 
+        return 0
+  
+    count = [0]  
+
+    ls = countSub(root.left,count, x)  
+ 
+    rs = countSub(root.right,count, x)  
+ 
+    if ((ls + rs + root.data) == x):  
+        count[0] += 1
+
+    return count[0] 
 
 class Node:
     def __init__(self,val):
@@ -68,7 +83,5 @@ if __name__=="__main__":
     for _ in range(0,t):
         s=input()
         root=buildTree(s)
-        if IsFoldable(root) is True:
-            print('Yes')
-        else:
-            print('No')
+        x = int(input())
+        print(countSubtreesWithSumX(root,x))
