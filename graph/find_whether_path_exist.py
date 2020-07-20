@@ -1,75 +1,35 @@
-from collections import defaultdict 
-class Graph: 
-    def __init__(self): 
-        self.graph = defaultdict(list) 
- 
-    def addEdge(self, u, v): 
-        self.graph[u].append(v) 
-     
-    def BFS(self, s, d): 
-          
-        if s == d: 
-            return True
-              
-
-        visited = [False]*(len(self.graph) + 1) 
-  
-  
-        queue = [] 
-        queue.append(s) 
-  
-        visited[s] = True
-        while(queue): 
-  
-
-            s = queue.pop(0) 
-  
- 
-            for i in self.graph[s]: 
-                  
-
-                if i == d: 
-                    return True
-  
-                if visited[i] == False: 
-                    queue.append(i) 
-                    visited[i] = True
-
-        return False
-  
-def isSafe(i, j, matrix): 
-    if i >= 0 and i <= len(matrix) and j >= 0 and j <= len(matrix[0]): 
-        return True
-    else: 
-        return False
-  
-
-def is_possible(M,N): 
-    s, d = None, None
-    N = len(M) 
-    g = Graph() 
-
-    k = 1 
-    for i in range(N): 
-        for j in range(N): 
-            if (M[i][j] != 0): 
-  
-                 
-                if (isSafe(i, j + 1, M)): 
-                    g.addEdge(k, k + 1) 
-                if (isSafe(i, j - 1, M)): 
-                    g.addEdge(k, k - 1) 
-                if (isSafe(i + 1, j, M)): 
-                    g.addEdge(k, k + N) 
-                if (isSafe(i - 1, j, M)): 
-                    g.addEdge(k, k - N) 
-              
-            if (M[i][j] == 1): 
-                s = k 
-  
-                  
-            if (M[i][j] == 2): 
-                d = k 
-            k += 1
-    return g.BFS(s, d) 
-
+false =[]
+def traverse(arr,x,y,n):
+    stack=[[x,y]]
+    v = []
+    res = 0
+    while(len(stack)>0):
+        x,y = stack.pop()
+        v.append([x,y])
+        if arr[x][y]==2:
+            res=1
+            break
+        if arr[x][y]==0:
+            continue
+        if x+1<n and [x+1,y] not in v:
+            stack.append([x+1,y])
+        if x-1>=0 and [x-1,y] not in v:
+            stack.append([x-1,y])
+        if y+1<n and [x,y+1] not in v:
+            stack.append([x,y+1])
+        if y-1>=0 and [x,y-1] not in v:
+            stack.append([x,y-1])
+    return res
+T = int(input())
+for _ in range(T):
+    n = int(input())
+    temp = [int(x) for x in input().split()]
+    arr=[[0 for i in range(n)] for j in range(n)]
+    for i in range(n):
+        for j in range(n):
+            arr[i][j]=temp.pop(0)
+            if arr[i][j]==1:
+                s = [i,j]
+    res = traverse(arr,s[0],s[1],n)
+    print(int(res))
+    false.clear()
