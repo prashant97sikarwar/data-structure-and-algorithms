@@ -1,24 +1,41 @@
-
-def serialize(root, A):
-    if root is None:
-        A.append(-1)
-        return
-    A.append(root.data)
-    serialize(root.left,A)
-    serialize(root.right,A)
+class Codec:
+    def serialhelp(self,root,path):
+        if root is None:
+            path.append("None")
+            return
+        else:
+            path.append(str(root.val))
+            self.serialhelp(root.left,path)
+            self.serialhelp(root.right,path)
+            
+    def help2(self,data):
+        if data[0] == "None":
+            data.pop(0)
+            return
+        else:
+            node = TreeNode(data[0])
+            data.pop(0)
+            node.left = self.help2(data)
+            node.right = self.help2(data)
+        return node
     
-def deSerialize(A):
-    index = 0
-    if index == len(A):
-        return None
-    val = A[index]
-    index += 1
-    if A[index] == -1:
-        return None
-    node = Node(val)
-    node.left = deSerialize(A)
-    node.right = deSerialize(A)
-    return node
+    def serialize(self, root):
+        path = []
+        if root is None:
+            return []
+        else:
+            self.serialhelp(root,path)
+            path = ','.join(path)
+        return path
+        
+
+    def deserialize(self, data):
+        if not data:
+            return
+        else:
+            data = data.split(',')
+            return self.help2(data)
+            
 
 from collections import deque
 class Node:
