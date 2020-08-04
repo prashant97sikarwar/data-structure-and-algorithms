@@ -17,15 +17,12 @@ def fun(n):
             for j in range(idx, i):
                 p[j] = 0
             idx += 1
-        '''if p[i] >= 4:
-            p[i] = 0
-            p[i+1] += 1'''
-    j = len(p) - 1
-       if (p[j] >= 2):
+        j = len(p) - 1
+        if (p[j] >= 2):
             p[index] = 1
             index += 1
         ans = 0
-    i = len(p)-1
+        i = len(p)-1
         while(i >= 0):
             ans = ans * 4 + p[i]
             i -= 1
