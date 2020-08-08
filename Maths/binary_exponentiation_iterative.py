@@ -3,8 +3,10 @@ def bexpo(a,b):
     while b > 0:
         if (b & 1):
             res *= a
-        a *= a
-        b >>=1
+            b -= 1
+        else:
+            a *= a
+            b >>=1
     return res
 
 a,b = map(int,input().split())
