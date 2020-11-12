@@ -1,3 +1,5 @@
+#Problem Link ;- https://atcoder.jp/contests/dp/tasks/dp_b
+
 def helper(arr,n,k):
     if (n==2):
         return abs(arr[1]-arr[0])
