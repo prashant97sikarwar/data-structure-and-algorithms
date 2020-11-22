@@ -35,7 +35,7 @@ if __name__ == '__main__':
             u,v = edges[i],edges[i+1]
             g.addEdge(u,v)
         
-        res = bfs(g.graph,N) 
+        res = dfs(g.graph,N) 
         for i in range (len (res)):
             print (res[i], end = " ")
         print()
